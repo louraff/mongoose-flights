@@ -1,0 +1,11 @@
+<%- include('../partials/header') %>
+
+<!-- Start of show specific code -->
+
+<ul>
+  <!-- RENDER MOVIE INFORMATION -->
+  <% for(const key in flight){ %>
+  <li><%= key[0].toUpperCase() + key.substring(1) %>: <%= flight[key] %></li>
+  <% } %>
+  <a href="/flights/<%=flight._id%>/edit">Edit Flight Details</a>
+</ul>
