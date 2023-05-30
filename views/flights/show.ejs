@@ -9,3 +9,56 @@
   <% } %>
   <a href="/flights/<%=flight._id%>/edit">Edit Flight Details</a>
 </ul>
+
+<br /><br />
+<h2>Destinations</h2>
+<form
+  id="add-destination-form"
+  method="POST"
+  action="/flights/<%= flight._id %>/destinations"
+>
+  <label>Airport:</label>
+  <select name="airport">
+    <option value="AUS">AUS</option>
+    <option value="DFW">DFW</option>
+    <option value="DEN">DEN</option>
+    <option value="LAX">LAX</option>
+    <option value="SAN" selected>SAN</option>
+  </select>
+  <label>
+    Arrival:
+    <input type="datetime-local" name="arrival" value="<%=flight.arrival %>" />
+  </label>
+  <!-- <label>Tickets:</label>
+  <ul>
+    <%- flight.tickets.map(t => `
+    <li>${t.seat} ${t.price}</li>
+    ` ).join('') %>
+  </ul> -->
+  <input type="submit" value="Add Destination" />
+</form>
+
+<% if (flight.destinations.length) { %>
+<table>
+  <thead>
+    <tr>
+      <th>Airport</th>
+      <th>Arrival</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Yep, we can define variables! -->
+    <% flight.destinations.forEach(function(f) { %>
+    <!-- Accumulate the total rating -->
+    <tr>
+      <!-- .toLocaleDateString() provides a more friendly date format -->
+      <td><%= f.airport %></td>
+      <td><%= f.arrival %></td>
+    </tr>
+    <% }); %>
+    <!-- Add a row to display the avg AFTER the forEach iteration  -->
+  </tbody>
+</table>
+<% } else { %>
+<h5>No Saved Destinations</h5>
+<% } %> <%- include('../partials/footer') %>

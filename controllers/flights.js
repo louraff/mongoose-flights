@@ -1,4 +1,5 @@
 const Flight = require('../models/flight');
+const Ticket = require('../models/ticket');
 
 module.exports = {
     index, 
@@ -37,12 +38,15 @@ async function show(req, res, next) {
   const {id} = req.params
   const flight = await Flight.findById(id)
 
+  const tickets = await Ticket.find({flight: flight._id})
+
   for(const key in flight.toObject()){
     console.log(`${key[0].toUpperCase() + key.substring(1)}: ${flight[key]}`)
   }
 
   res.render('flights/show', {
-    flight: flight.toObject(), 
+    flight: flight.toObject(),
+    tickets, 
     title: 'Flight Details'
   })
 } catch(err) {
